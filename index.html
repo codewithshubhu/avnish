@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Just for you 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;height:100%}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(120deg,#ffe6eb,#fff0f5,#ffe6f0);background-size:200% 200%;animation:bgMove 6s infinite alternate;overflow:hidden;color:#333}
+@keyframes bgMove{0%{background-position:left}100%{background-position:right}}
+.section{position:fixed;inset:0;display:none;opacity:0;transform:scale(.98);height:100vh;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px;transition:opacity .5s ease,transform .5s ease}
+.section.active{display:flex;opacity:1;transform:scale(1);animation:sectionIn .6s ease}
+.hidden{display:none!important}
+@keyframes sectionIn{from{opacity:0;transform:scale(.97) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ---------------- UPGRADED CARD ---------------- */
+.card{
+  position:relative;
+  background:linear-gradient(160deg,#ffffff 0%,#fff8fb 55%,#fff0f5 100%);
+  padding:36px 26px 32px;
+  border-radius:26px;
+  box-shadow:
+    0 24px 60px -18px rgba(233,30,99,.25),
+    0 12px 30px -12px rgba(233,30,99,.15),
+    0 4px 10px rgba(0,0,0,.04),
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 0 0 1px rgba(255,220,232,.6);
+  max-width:600px;
+  width:95%;
+  z-index:2;
+  text-align:center;
+  animation:fadeIn .8s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------------- SUBTLE GLITTER ---------------- */
+.card:not(.yes-card):not(.loader-card):not(.auth-card)::before,
+.card:not(.yes-card):not(.loader-card):not(.auth-card)::after{
+  content:'';
+  position:absolute;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffb6d2 0%,rgba(255,182,210,.6) 35%,transparent 70%);
+  box-shadow:0 0 8px rgba(255,145,180,.85),0 0 14px rgba(255,145,180,.4);
+  animation:glitterTwinkle 3s ease-in-out infinite;
+  pointer-events:none;
+  z-index:5;
+}
+.card:not(.yes-card):not(.loader-card):not(.auth-card)::before{top:14px;left:18px}
+.card:not(.yes-card):not(.loader-card):not(.auth-card)::after{bottom:16px;right:20px;animation-delay:1.5s}
+@keyframes glitterTwinkle{
+  0%,100%{opacity:0;transform:scale(.4) rotate(0)}
+  50%{opacity:1;transform:scale(1.25) rotate(45deg)}
+}
+
+/* ---------------- STAGGERED CONTENT ---------------- */
+.card:not(.yes-card) > *{
+  animation:riseIn .65s cubic-bezier(.2,.9,.25,1) both;
+}
+.card:not(.yes-card) > *:nth-child(1){animation-delay:.05s}
+.card:not(.yes-card) > *:nth-child(2){animation-delay:.12s}
+.card:not(.yes-card) > *:nth-child(3){animation-delay:.19s}
+.card:not(.yes-card) > *:nth-child(4){animation-delay:.26s}
+.card:not(.yes-card) > *:nth-child(5){animation-delay:.33s}
+.card:not(.yes-card) > *:nth-child(6){animation-delay:.40s}
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+
+/* ---------------- TYPO ---------------- */
+.handwritten{
+  font-family:'Great Vibes',cursive;
+  font-size:2.15rem;
+  font-weight:400;
+  line-height:1.3;
+  margin:8px 0 14px;
+  background:linear-gradient(135deg,#e91e63 0%,#ff6699 45%,#e91e63 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:#e91e63;
+}
+.card p{font-size:.95rem;line-height:1.55;margin:8px 0;color:#444}
+.lead{line-height:1.55}
+.quote{font-style:italic;color:#555;line-height:1.6;white-space:normal}
+
+/* ---------------- BUTTONS ---------------- */
+.btn{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ff5c8a 0%,#e91e63 55%,#c2185b 100%);
+  color:#fff;
+  border:none;
+  padding:11px 24px;
+  border-radius:12px;
+  margin-top:18px;
+  cursor:pointer;
+  font-family:'Poppins',sans-serif;
+  font-size:.9rem;
+  font-weight:500;
+  letter-spacing:.02em;
+  box-shadow:0 8px 22px -6px rgba(233,30,99,.55),inset 0 1px 0 rgba(255,255,255,.35);
+  transition:transform .25s,box-shadow .25s;
+}
+.btn::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);
+  transform:translateX(-120%);
+  transition:transform .75s ease;
+  pointer-events:none;
+}
+.btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 30px -8px rgba(233,30,99,.65),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:hover::after{transform:translateX(120%)}
+.btn:active{transform:scale(.97)}
+.btn.outline{background:#fff;color:#e91e63;border:2px solid #e91e63;box-shadow:0 4px 12px -4px rgba(233,30,99,.2)}
+.btn.outline:hover{background:#fff0f5;box-shadow:0 8px 20px -6px rgba(233,30,99,.3)}
+.btn.outline::after{display:none}
+.btn.confirm{background:linear-gradient(135deg,#ff85a2 0%,#ff6699 55%,#e91e63 100%)}
+.btn-row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+
+/* ---------------- GIF ---------------- */
+.gif-embed-wrap{
+  width:160px;
+  margin:8px auto 18px;
+  border-radius:18px;
+  overflow:hidden;
+  background:transparent;
+  filter:drop-shadow(0 10px 26px rgba(233,30,99,.22));
+}
+.gif-embed-wrap img{width:100%;height:auto;display:block;box-shadow:none}
+
+/* ---------------- HEART RAIN ---------------- */
+#heart-rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.heart{position:absolute;top:-30px;color:#ff4d6d;font-size:20px;opacity:.75;animation:fall linear forwards}
+@keyframes fall{0%{transform:translateY(-30px) rotate(0);opacity:0}10%{opacity:.8}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+
+/* ============================================================
+   LOADING PAGE — more impressive
+   ============================================================ */
+#loadingPage{background:linear-gradient(135deg,#fff0f5,#ffe4ec,#ffd9e8);color:#e91e63}
+.loader-card{padding:34px 28px 30px}
+.loader-orbit{
+  position:relative;
+  width:140px;height:140px;
+  margin:6px auto 14px;
+  display:grid;place-items:center;
+}
+.loader-orbit::before{
+  content:'';
+  position:absolute;inset:14px;
+  border-radius:50%;
+  border:2px dashed rgba(233,30,99,.28);
+  animation:dashSpin 12s linear infinite;
+}
+.loader-orbit::after{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,145,180,.35),transparent 62%);
+  animation:haloPulse 2.2s ease-in-out infinite;
+}
+@keyframes dashSpin{to{transform:rotate(360deg)}}
+@keyframes haloPulse{0%,100%{transform:scale(.9);opacity:.55}50%{transform:scale(1.12);opacity:1}}
+
+.loader-core{
+  position:relative;z-index:2;
+  font-size:2.9rem;line-height:1;
+  animation:heartbeat 1.3s ease-in-out infinite;
+  filter:drop-shadow(0 0 16px rgba(233,30,99,.6)) drop-shadow(0 0 30px rgba(255,92,138,.35));
+}
+@keyframes heartbeat{0%,100%{transform:scale(1)}25%{transform:scale(1.18)}50%{transform:scale(.97)}75%{transform:scale(1.1)}}
+
+.orbit-dot{
+  position:absolute;
+  top:50%;left:50%;
+  margin:-9px 0 0 -9px;
+  font-size:1rem;
+  animation:orbitSpin 3.4s linear infinite;
+  filter:drop-shadow(0 0 6px currentColor);
+  z-index:1;
+}
+.d1{color:#e91e63;animation-delay:0s}
+.d2{color:#ff6b9d;animation-delay:-1.13s}
+.d3{color:#ff4081;animation-delay:-2.27s}
+@keyframes orbitSpin{
+  from{transform:rotate(0deg) translateX(52px) rotate(0deg)}
+  to{transform:rotate(360deg) translateX(52px) rotate(-360deg)}
+}
+
+.loader-title{
+  font-family:'Great Vibes',cursive;
+  font-size:2rem;
+  margin:6px 0 10px;
+  color:#e91e63;
+  background:linear-gradient(135deg,#e91e63,#ff6699,#e91e63);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.shine-text{font-size:1.02rem!important;font-weight:500!important;background:linear-gradient(90deg,#e91e63,#ff8fb3,#e91e63);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 2s linear infinite;margin:4px 0 14px!important;min-height:1.3em}
+@keyframes shine{0%{background-position:0%}100%{background-position:200%}}
+
+.load-bar{
+  width:100%;max-width:280px;
+  height:6px;
+  background:#ffe4ec;
+  border-radius:10px;
+  margin:0 auto 8px;
+  overflow:hidden;
+  box-shadow:inset 0 1px 2px rgba(233,30,99,.15);
+  position:relative;
+}
+.load-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#ff8fb3,#e91e63,#ff4081);
+  border-radius:10px;
+  box-shadow:0 0 12px rgba(233,30,99,.6);
+  animation:loadProgress 2s ease-out forwards;
+}
+@keyframes loadProgress{0%{width:0%}60%{width:72%}100%{width:100%}}
+.load-hint{font-size:.78rem!important;color:#c48aa0!important;margin:4px 0 0!important;letter-spacing:.04em}
+
+/* ============================================================
+   PASSWORD / LOGIN PAGE — more impressive
+   ============================================================ */
+.auth-card{
+  background:linear-gradient(160deg,#ffffff 0%,#fff9fc 45%,#ffeef5 100%);
+  padding:44px 28px 34px;
+  overflow:hidden;
+}
+.auth-card::before{
+  content:'';
+  position:absolute;
+  top:-40px;left:-40px;right:-40px;height:120px;
+  background:radial-gradient(ellipse at center,rgba(255,145,180,.28),transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+.auth-card > *{position:relative;z-index:1}
+
+.lock-glow{
+  position:relative;
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  width:64px;height:64px;
+  margin:0 auto 14px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#ffe0ec,#ffc2d6);
+  box-shadow:
+    0 8px 22px -6px rgba(233,30,99,.5),
+    inset 0 2px 4px rgba(255,255,255,.9),
+    inset 0 -3px 6px rgba(233,30,99,.15);
+  font-size:1.9rem;
+  line-height:1;
+  animation:lockBob 3.2s ease-in-out infinite;
+}
+.lock-glow::after{
+  content:'';
+  position:absolute;
+  inset:-10px;
+  border-radius:50%;
+  border:1.5px solid rgba(233,30,99,.2);
+  animation:lockRing 2.4s ease-out infinite;
+}
+@keyframes lockBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+@keyframes lockRing{0%{transform:scale(.85);opacity:.7}100%{transform:scale(1.35);opacity:0}}
+
+.auth-card .handwritten{margin:0 0 10px}
+.auth-card > p{
+  font-size:.9rem;
+  color:#8a6b76;
+  line-height:1.65;
+  margin:0 0 4px;
+}
+
+input[type=password]{
+  padding:14px 16px;
+  width:100%;
+  max-width:340px;
+  border-radius:14px;
+  border:1.5px solid rgba(233,30,99,.28);
+  background:rgba(255,255,255,.9);
+  outline:none;
+  margin-top:18px;
+  text-align:center;
+  font-family:'Poppins',sans-serif;
+  font-size:.95rem;
+  letter-spacing:.1em;
+  transition:all .3s;
+  box-shadow:inset 0 2px 4px rgba(233,30,99,.05);
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+input[type=password]::placeholder{color:#c9a4b3;letter-spacing:.02em;font-weight:300}
+input[type=password]:focus{border-color:#e91e63;letter-spacing:.15em;box-shadow:0 0 0 4px rgba(233,30,99,.12),inset 0 2px 4px rgba(233,30,99,.05)}
+input.shake{animation:shake .5s}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
+
+.hint{font-size:.82rem!important;color:#a58a94!important;margin-top:14px!important;line-height:1.6;display:flex;align-items:center;justify-content:center;gap:6px}
+.hint::before{content:'🔑';font-size:.85rem;filter:grayscale(.3)}
+.error{min-height:18px;font-size:.85rem!important;color:#d32f2f;margin:6px 0 0!important;opacity:0;transition:opacity .3s;font-weight:500}
+.error.show{opacity:1}
+
+/* ---------------- MINI PIANO ---------------- */
+.mini-piano{
+  display:flex;
+  gap:2px;
+  justify-content:center;
+  margin:0 auto 10px;
+  padding:3px;
+  background:#2a0f1d;
+  border-radius:5px;
+  width:fit-content;
+  box-shadow:0 3px 8px rgba(0,0,0,.18);
+}
+.mini-piano span{
+  width:11px;height:22px;
+  background:#fff;
+  border-radius:0 0 3px 3px;
+  transform-origin:top;
+  animation:miniKeyPress 2.8s ease-in-out infinite;
+}
+.mini-piano span:nth-child(1){animation-delay:0s}
+.mini-piano span:nth-child(2){animation-delay:.25s}
+.mini-piano span:nth-child(3){animation-delay:.5s}
+.mini-piano span:nth-child(4){animation-delay:.75s}
+.mini-piano span:nth-child(5){animation-delay:1s}
+@keyframes miniKeyPress{
+  0%,65%,100%{transform:scaleY(1);background:#fff}
+  72%{transform:scaleY(.88);background:#ff8fb3}
+  82%{transform:scaleY(1);background:#fff}
+}
+
+/* ---------------- QUOTE PAGE ATMOSPHERE ---------------- */
+#quotePage .card{
+  background:linear-gradient(160deg,#fffdfb 0%,#fff5f8 50%,#ffeaf2 100%);
+}
+
+/* ---------------- YES PULSE ---------------- */
+#yesBtn{animation:softPulse 2.4s ease-in-out infinite}
+@keyframes softPulse{
+  0%,100%{box-shadow:0 8px 22px -6px rgba(233,30,99,.55),inset 0 1px 0 rgba(255,255,255,.35),0 0 0 0 rgba(255,102,153,.4)}
+  50%{box-shadow:0 8px 22px -6px rgba(233,30,99,.55),inset 0 1px 0 rgba(255,255,255,.35),0 0 0 10px rgba(255,102,153,0)}
+}
+
+/* ---------------- PAPER FINAL ---------------- */
+.yes-card{
+  position:relative;
+  max-width:400px;
+  padding:46px 26px 100px;
+  border-radius:6px 18px 8px 20px / 16px 6px 20px 8px;
+  background-color:#fffdf6;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(233,30,99,.06) 0 1px, transparent 1px 28px),
+    radial-gradient(circle at 18% 8%, rgba(255,200,215,.16), transparent 62%),
+    radial-gradient(circle at 88% 92%, rgba(255,210,225,.14), transparent 55%);
+  box-shadow:
+    0 22px 55px rgba(233,30,99,.20),
+    0 3px 10px rgba(0,0,0,.05),
+    inset 0 0 90px rgba(255,200,215,.10);
+  border:1px solid rgba(233,30,99,.09);
+  text-align:center;
+  animation:paperIn .7s cubic-bezier(.2,.9,.25,1) both;
+}
+@keyframes paperIn{
+  from{opacity:0;transform:rotate(-.8deg) translateY(16px) scale(.97)}
+  to{opacity:1;transform:rotate(-.8deg) translateY(0) scale(1)}
+}
+.yes-card::before,.yes-card::after{
+  content:'';
+  position:absolute;
+  width:88px;height:26px;
+  top:-13px;
+  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.35) 0 6px, transparent 6px 12px);
+  background-color:rgba(255,178,200,.72);
+  border:1px solid rgba(233,30,99,.15);
+  box-shadow:0 3px 9px rgba(150,40,80,.13);
+  z-index:3;pointer-events:none;
+}
+.yes-card::before{left:24px;transform:rotate(-8deg)}
+.yes-card::after{right:24px;transform:rotate(7deg)}
+#yesPage .insta-box{background:rgba(255,250,242,.9);box-shadow:inset 0 0 0 1px rgba(233,30,99,.10)}
+
+.yes-title{margin:12px 0 8px;font-size:30px;background:linear-gradient(135deg,#e91e63 0%,#ff6699 45%,#e91e63 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:#e91e63}
+.yes-text p{font-size:14px;line-height:1.55;color:#444;margin:6px 0}
+.insta-box{margin:15px auto 8px;padding:9px 13px;display:flex;align-items:center;gap:10px;border-radius:14px;background:#fafafa;box-shadow:inset 0 0 0 1px #eee;justify-content:center;position:relative;z-index:2}
+.insta-box img{width:22px;height:22px;border-radius:6px;box-shadow:none}
+.insta-box a{color:#d62976;font-weight:600;text-decoration:none}
+.insta-box a:hover{text-decoration:underline}
+
+/* ---------------- CORNER SIGNATURE ---------------- */
+.corner-signature{
+  position:absolute;
+  bottom:16px;
+  right:22px;
+  text-align:right;
+  transform:rotate(-5deg);
+  transform-origin:bottom right;
+  z-index:2;
+}
+.sig-closing{
+  display:block;
+  font-family:'Great Vibes',cursive;
+  font-size:1.05rem;
+  color:#c2185b;
+  opacity:.75;
+  margin-bottom:0;
+  line-height:1.1;
+  transform:rotate(-2deg);
+  animation:sigClosingIn .9s ease-out .4s both;
+}
+@keyframes sigClosingIn{from{opacity:0;transform:rotate(-2deg) translateY(4px)}to{opacity:.75;transform:rotate(-2deg) translateY(0)}}
+.sig-name{
+  font-family:'Dancing Script',cursive;
+  font-weight:700;
+  font-size:1.75rem;
+  line-height:1;
+  color:#c2185b;
+  display:inline-block;
+  position:relative;
+  animation:sigWrite 1.7s ease-out both,sigGlow 3.5s ease-in-out 1.7s infinite;
+}
+.sig-line{display:block;width:100%;height:9px;margin-top:-2px;overflow:visible}
+.sig-line path{stroke:#c2185b;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-dasharray:200;stroke-dashoffset:200;animation:drawLine 1.3s ease-out .9s forwards}
+@keyframes sigWrite{from{opacity:0;transform:translateX(-14px);filter:blur(2px)}to{opacity:1;transform:translateX(0);filter:blur(0)}}
+@keyframes sigGlow{0%,100%{text-shadow:0 0 0 transparent}50%{text-shadow:0 0 12px rgba(233,30,99,.4)}}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+
+/* ---------------- GROWING EFFECT ---------------- */
+#moveYesBtn{transition:transform .3s cubic-bezier(.2,.9,.25,1);will-change:transform}
+#movingNoPage .btn-row{position:relative}
+#moveNoBtn{transition:transform .2s ease}
+
+@media(max-width:420px){
+  .card{padding:28px 18px 26px}
+  .auth-card{padding:34px 20px 26px}
+  .gif-embed-wrap{width:120px}
+  .handwritten{font-size:2rem}
+  .card p{font-size:.9rem}
+  .btn{padding:10px 20px;font-size:.88rem}
+  .yes-text p{font-size:13.5px}
+  .yes-card{padding:40px 18px 96px}
+  .yes-card::before{left:14px;width:74px}
+  .yes-card::after{right:14px;width:74px}
+  .sig-name{font-size:1.5rem}
+  .sig-closing{font-size:.92rem}
+  .corner-signature{right:16px;bottom:14px}
+  .mini-piano span{width:9px;height:18px}
+  .loader-orbit{width:120px;height:120px}
+  .orbit-dot{font-size:.85rem;margin:-7px 0 0 -7px}
+  .d1,.d2,.d3{animation-name:orbitSpinSm}
+  @keyframes orbitSpinSm{
+    from{transform:rotate(0deg) translateX(44px) rotate(0deg)}
+    to{transform:rotate(360deg) translateX(44px) rotate(-360deg)}
+  }
+  .loader-core{font-size:2.4rem}
+  .loader-title{font-size:1.8rem}
+  .lock-glow{width:56px;height:56px;font-size:1.65rem}
+}
+</style>
+</head>
+<body>
+<div id="heart-rain"></div>
+
+<audio id="pianoAudio" loop preload="auto">
+  <source src="piano.mp3" type="audio/mpeg">
+</audio>
+<audio id="musicAudio" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="app">
+
+<!-- ================= LOADING ================= -->
+<section id="loadingPage" class="section active">
+  <div class="card loader-card">
+    <div class="loader-orbit">
+      <span class="orbit-dot d1">♥</span>
+      <span class="orbit-dot d2">♥</span>
+      <span class="orbit-dot d3">♥</span>
+      <div class="loader-core">💗</div>
+    </div>
+    <h2 class="loader-title">Just a moment…</h2>
+    <p class="shine-text">Preparing your surprise ✨</p>
+    <div class="load-bar"><div class="load-fill"></div></div>
+    <p class="load-hint">Almost there…</p>
+  </div>
+</section>
+
+<!-- ================= LOGIN / PASSWORD ================= -->
+<section id="passwordPage" class="section hidden">
+  <div class="card auth-card">
+    <div class="lock-glow">🌸</div>
+    <h1 class="handwritten">Welcome to my page</h1>
+    <p>I don’t know how you’ll react to this,<br>but it’s a small thing I made just for you. 🩷</p>
+    <form id="pwForm">
+      <input type="password" id="pwInput" placeholder="Enter password" required autocomplete="off" inputmode="numeric">
+      <button class="btn" type="submit">Unlock ♡</button>
+    </form>
+    <p class="hint">Hint: It's a special date 💭</p>
+    <p id="passwordError" class="error"></p>
+  </div>
+</section>
+
+<section id="mainPage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="introHeart.gif" alt="introHeart"></div>
+    <h2 class="handwritten">Hey, 🌷</h2>
+    <p id="typewriter"></p>
+    <button class="btn" id="toWelcome" type="button">Next →</button>
+  </div>
+</section>
+
+<section id="welcomePage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="helloWave.gif" alt="helloWave"></div>
+    <h2 class="handwritten">Hi I'm Avnish… 🌷</h2>
+    <p>I'm a Pianist 🎹 and a Gamer 🎮.</p>
+    <button class="btn" id="continueBtn" type="button">Continue →</button>
+  </div>
+</section>
+
+<section id="quotePage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="deepThought.gif" alt="deepThought"></div>
+    <h2 class="handwritten">Before It’s Too Late</h2>
+    <p class="lead quote">I want to tell you this—<br>some things are scary to say,<br>but not saying them leaves regret.<br><br>I don’t want to carry<br>that regret in my life.</p>
+    <button class="btn" id="toProposal" type="button">Next →</button>
+  </div>
+</section>
+
+<section id="proposalPage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="friendRequest.gif" alt="friendRequest"></div>
+    <h1 class="handwritten">Can we be friends? 💖</h1>
+    <p>I'd just like to know you better<br>and be friends. ☺️</p>
+    <div class="btn-row">
+      <button id="yesBtn" class="btn confirm" type="button">Yes 😊</button>
+      <button id="noBtn" class="btn outline" type="button">No</button>
+    </div>
+  </div>
+</section>
+
+<section id="confirmNoPage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="pleaseRethink.gif" alt="pleaseRethink"></div>
+    <h1 class="handwritten">Are you sure? </h1>
+    <p>Please reconsider it 💭.<br>I was really hoping we could be friends… 🥺 </p>
+    <div class="btn-row">
+      <button id="confirmYesBtn" class="btn confirm" type="button">Yes 🤝</button>
+      <button id="confirmNoBtn" class="btn outline" type="button">No — really</button>
+    </div>
+  </div>
+</section>
+
+<section id="movingNoPage" class="section hidden">
+  <div class="card">
+    <div class="gif-embed-wrap"><img src="playfulNo.gif" alt="playfulNo"></div>
+    <h1 class="handwritten">Wait… really? Are you trying to escap? </h1>
+    <p>Nope… that's not easy. 😁</p>
+    <div class="btn-row">
+      <button id="moveYesBtn" class="btn confirm" type="button">Okay, fine 🤝</button>
+      <button id="moveNoBtn" class="btn outline" type="button">No 😭</button>
+    </div>
+  </div>
+</section>
+
+<section id="yesPage" class="section hidden">
+  <div class="card yes-card" id="yesCard">
+    <div class="gif-embed-wrap">
+      <img src="celebrationYes.gif" alt="celebrationYes">
+    </div>
+    <h2 class="handwritten yes-title">Yay! Thank you ❤️</h2>
+    <div class="yes-text">
+      <p>Congratulations — you’ve just joined my <b>VIP friend list</b> 😂</p>
+      <p><i>Just one rule — keep that smile, it suits you 😜</i></p>
+      <p><i>Next time we meet, don’t act too cool 😉</i></p>
+      <p><i>I know you’re secretly happy too 😏</i></p>
+    </div>
+    <div class="insta-box">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+      <span>Find me on Instagram<br>
+      <a href="https://www.instagram.com/prime______avnish" target="_blank">@prime______avnish</a></span>
+    </div>
+    <div class="corner-signature">
+      <span class="sig-closing">Yours truly,</span>
+      <span class="sig-name">Avnish</span>
+      <svg class="sig-line" viewBox="0 0 180 12" preserveAspectRatio="none">
+        <path d="M4,8 Q45,2 90,7 T176,5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+const sections=document.querySelectorAll(".section");
+const pwForm=document.getElementById("pwForm");
+const pwInput=document.getElementById("pwInput");
+const passwordError=document.getElementById("passwordError");
+const typewriter=document.getElementById("typewriter");
+const moveNoBtn=document.getElementById("moveNoBtn");
+const moveYesBtn=document.getElementById("moveYesBtn");
+
+/* ============================================================
+   AUDIO — instant start, retry until it really plays
+   ============================================================ */
+const pianoAudio=document.getElementById("pianoAudio");
+const musicAudio=document.getElementById("musicAudio");
+const fadeTimers={piano:null,music:null};
+const AUDIO_TARGET=0.5;
+let phase='piano';
+
+function clearFade(key){
+  if(fadeTimers[key]){clearInterval(fadeTimers[key]);fadeTimers[key]=null;}
+}
+function playNow(audio,key,vol){
+  vol=(vol===undefined)?AUDIO_TARGET:vol;
+  clearFade(key);
+  try{audio.volume=vol;}catch(e){}
+  const p=audio.play();
+  if(p&&p.catch)p.catch(function(){});
+}
+function stopNow(audio,key){
+  clearFade(key);
+  try{audio.pause();}catch(e){}
+  try{audio.volume=0;}catch(e){}
+}
+function fadeOutQuick(audio,key){
+  clearFade(key);
+  let v=audio.volume;
+  if(v<=0){try{audio.pause();}catch(e){}try{audio.volume=0;}catch(e){}return;}
+  fadeTimers[key]=setInterval(function(){
+    v-=0.1;
+    if(v<=0){
+      try{audio.volume=0;}catch(e){}
+      try{audio.pause();}catch(e){}
+      clearFade(key);
+    }else{
+      try{audio.volume=v;}catch(e){}
+    }
+  },50);
+}
+
+function applyPhase(){
+  try{
+    if(phase==='piano'){
+      if(pianoAudio.paused) playNow(pianoAudio,'piano');
+      if(!musicAudio.paused) stopNow(musicAudio,'music');
+    }else if(phase==='silent'){
+      if(!pianoAudio.paused) fadeOutQuick(pianoAudio,'piano');
+      if(!musicAudio.paused) stopNow(musicAudio,'music');
+    }else if(phase==='music'){
+      if(!pianoAudio.paused) stopNow(pianoAudio,'piano');
+      if(musicAudio.paused) playNow(musicAudio,'music');
+    }
+  }catch(e){}
+}
+
+applyPhase();
+window.addEventListener('load',applyPhase);
+window.addEventListener('pageshow',applyPhase);
+pianoAudio.addEventListener('canplay',applyPhase);
+musicAudio.addEventListener('canplay',applyPhase);
+pianoAudio.addEventListener('loadeddata',applyPhase);
+musicAudio.addEventListener('loadeddata',applyPhase);
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden) applyPhase();
+});
+
+/* Retry on every gesture until audio actually plays */
+const unlockEvents=["pointerdown","touchstart","touchend","keydown","click"];
+function isAudioRunning(){
+  if(phase==='silent') return true;
+  if(phase==='piano') return !pianoAudio.paused;
+  if(phase==='music') return !musicAudio.paused;
+  return false;
+}
+function tryUnlock(){
+  applyPhase();
+  if(isAudioRunning()){
+    unlockEvents.forEach(function(ev){
+      window.removeEventListener(ev,tryUnlock,true);
+    });
+  }
+}
+unlockEvents.forEach(function(ev){
+  window.addEventListener(ev,tryUnlock,true);
+});
+
+/* ============================================================
+   NAVIGATION — synchronous, no requestAnimationFrame dependency
+   ============================================================ */
+let quotePianoTimer=null;
+function switchSection(id){
+  const target=document.getElementById(id);
+  if(!target) return;
+
+  /* target ko chhode bina baaki sab hide */
+  sections.forEach(function(s){
+    if(s===target) return;
+    s.classList.remove("active");
+    s.classList.add("hidden");
+  });
+
+  /* target ko turant visible karo (rAF ka bharosa nahi) */
+  target.classList.remove("hidden");
+  void target.offsetWidth;   /* force reflow so animation restart ho */
+  target.classList.add("active");
+  target.style.opacity="";
+  target.style.transform="";
+
+  window.scrollTo(0,0);
+
+  /* Quote page: piano ~1.5s more, phir quick fade out */
+  if(id==="quotePage"){
+    clearTimeout(quotePianoTimer);
+    quotePianoTimer=setTimeout(function(){
+      phase='silent';
+      applyPhase();
+    },1500);
+  }
+  /* Proposal page: music turant */
+  if(id==="proposalPage"){
+    clearTimeout(quotePianoTimer);
+    phase='music';
+    applyPhase();
+  }
+  /* Reset dodge */
+  if(id==="movingNoPage"){
+    dodgeCount=0;
+    if(moveYesBtn) moveYesBtn.style.transform="";
+  }
+}
+
+setTimeout(function(){
+  switchSection("passwordPage");
+  setTimeout(function(){ try{pwInput.focus();}catch(e){} },300);
+},2000);
+
+/* ============================================================
+   PASSWORD — lenient matching + multiple entry points
+   ============================================================ */
+const correctPasswords=["1432"];   /* yahan aur bhi add kar sakte ho, e.g. ["1012","1210"] */
+
+function normalizePassword(v){
+  /* sirf digits rakho: "10/12", "10-12", "10 12" -> "1012" */
+  return String(v||"").replace(/[^0-9]/g,"");
+}
+
+let unlocking=false;
+
+function showWrongPassword(){
+  passwordError.textContent="Wrong password 😅";
+  passwordError.classList.add("show");
+  pwInput.classList.remove("shake");
+  void pwInput.offsetWidth;
+  pwInput.classList.add("shake");
+  try{pwInput.select();}catch(e){}
+}
+
+function attemptUnlock(){
+  if(unlocking) return;
+
+  const entered=normalizePassword(pwInput.value);
+
+  if(correctPasswords.indexOf(entered)!==-1){
+    unlocking=true;
+    passwordError.textContent="";
+    passwordError.classList.remove("show");
+    pwInput.value="";
+
+    try{
+      switchSection("mainPage");
+      startTypewriter();
+    }catch(err){
+      /* last-resort fallback: page HAR HAAL me khule */
+      try{
+        sections.forEach(function(s){
+          s.classList.remove("active");
+          s.classList.add("hidden");
+          s.style.opacity="";
+          s.style.transform="";
+        });
+        const m=document.getElementById("mainPage");
+        if(m){
+          m.classList.remove("hidden");
+          void m.offsetWidth;
+          m.classList.add("active");
+        }
+        startTypewriter();
+      }catch(e2){}
+    }
+  }else{
+    showWrongPassword();
+  }
+}
+
+/* Form submit (Enter key ya button click) */
+pwForm.addEventListener("submit",function(e){
+  e.preventDefault();
+  attemptUnlock();
+});
+
+/* Button click ka alag handler — kuch browsers me submit fire na ho to bhi chale */
+const unlockBtn=pwForm.querySelector('button[type="submit"]');
+if(unlockBtn){
+  unlockBtn.addEventListener("click",function(e){
+    e.preventDefault();
+    attemptUnlock();
+  });
+}
+
+/* ---------- TYPEWRITER ---------- */
+const text="You’ve always seemed like a really nice person. 🤝🏻";
+let typeTimer=null;
+function startTypewriter(){
+  clearTimeout(typeTimer);
+  typewriter.textContent="";
+  let i=0;
+  function type(){
+    if(i>=text.length)return;
+    typewriter.textContent+=text.charAt(i);
+    i++;
+    typeTimer=setTimeout(type,50);
+  }
+  type();
+}
+
+/* ---------- NAV HANDLERS ---------- */
+document.getElementById("toWelcome").onclick=function(){switchSection("welcomePage");};
+document.getElementById("continueBtn").onclick=function(){switchSection("quotePage");};
+document.getElementById("toProposal").onclick=function(){switchSection("proposalPage");};
+document.getElementById("yesBtn").onclick=function(){switchSection("yesPage");};
+document.getElementById("noBtn").onclick=function(){switchSection("confirmNoPage");};
+document.getElementById("confirmYesBtn").onclick=function(){switchSection("yesPage");};
+document.getElementById("confirmNoBtn").onclick=function(){switchSection("movingNoPage");};
+document.getElementById("moveYesBtn").onclick=function(){switchSection("yesPage");};
+
+/* ---------- GROWING EFFECT ---------- */
+let dodgeCount=0;
+function moveNoButton(){
+  if(!moveNoBtn)return;
+  const x=(Math.random()*140)-70;
+  const y=(Math.random()*90)-45;
+  moveNoBtn.style.transform="translate("+x+"px,"+y+"px) scale("+Math.max(.55,1-dodgeCount*.07)+")";
+  dodgeCount++;
+  if(moveYesBtn){
+    const s=Math.min(1.55,1+dodgeCount*.085);
+    moveYesBtn.style.transform="scale("+s+")";
+  }
+}
+moveNoBtn.addEventListener("mouseenter",moveNoButton);
+moveNoBtn.addEventListener("touchstart",function(e){
+  e.preventDefault();
+  moveNoButton();
+});
+
+/* ---------- HEART RAIN ---------- */
+const heartRain=document.getElementById("heart-rain");
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.textContent=Math.random()>.5?"💖":"♡";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(14+Math.random()*10)+"px";
+  heart.style.animationDuration=(3+Math.random()*3)+"s";
+  heartRain.appendChild(heart);
+  setTimeout(function(){heart.remove();},6500);
+}
+setInterval(createHeart,450);
+</script>
+</body>
+</html>
